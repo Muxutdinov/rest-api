@@ -17,4 +17,27 @@ router.post("/post", async (req, res) => {
   });
 });
 
+//Delete
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  const findUser = await connectModel.findById(id);
+  await connectModel.findByIdAndDelete(id);
+  res.status(200).json({
+    msg: "user deleted",
+    deleted: findUser,
+  });
+});
+
+//UPDATE
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password } = req.body;
+  const UpdateUser = await connectModel.findByIdAndUpdate(id, {
+    name,
+    email,
+    password,
+  });
+  res.status(200).json({ msg: "User Updated", UpdateUser });
+});
+
 module.exports = { router: router };
