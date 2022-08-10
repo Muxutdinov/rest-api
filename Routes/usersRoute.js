@@ -1,12 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const { connectModel } = require("../db");
+import { getAllUsers } from "../controller/userController.js";
 
-//GET
-router.get("/get", async (req, res) => {
-  const users = await connectModel.find({});
-  res.status(200).send(users);
-});
+//GET ALL USERS
+router.get("/get", getAllUsers());
+
+// GET ONE USER
+// router.get("/get/:id", async (req, res) => {
+//   const { id } = req.params;
+//   const user = await connectModel.find((user) => user.id === id);
+//   if (!user) {
+//     res.send("<h1>User topilmadi</h1>");
+//   } else {
+//     res.json({
+//       msg: "user topildi!",
+//       user,
+//     });
+//   }
+// });
 
 //POST
 router.post("/post", async (req, res) => {
