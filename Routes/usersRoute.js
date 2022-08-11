@@ -1,54 +1,26 @@
 const express = require("express");
 const router = express.Router();
-import { getAllUsers } from "../controller/userController.js";
+const {
+  GetAllUsers,
+  GetOneUser,
+  Post,
+  Delete,
+  Update,
+} = require("../controller/userController");
 
 //GET ALL USERS
-router.get("/get", getAllUsers());
+router.get("/get", GetAllUsers);
 
 // GET ONE USER
-// router.get("/get/:id", async (req, res) => {
-//   const { id } = req.params;
-//   const user = await connectModel.find((user) => user.id === id);
-//   if (!user) {
-//     res.send("<h1>User topilmadi</h1>");
-//   } else {
-//     res.json({
-//       msg: "user topildi!",
-//       user,
-//     });
-//   }
-// });
+router.get("/get/:id", GetOneUser);
 
 //POST
-router.post("/post", async (req, res) => {
-  const newUser = await connectModel.create(req.body);
-  res.status(201).json({
-    msg: "yangi data yaratildi!",
-    newUser,
-  });
-});
+router.post("/post", Post);
 
-//Delete
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  const findUser = await connectModel.findById(id);
-  await connectModel.findByIdAndDelete(id);
-  res.status(200).json({
-    msg: "user deleted",
-    deleted: findUser,
-  });
-});
+//DELETE
+router.delete("/delete/:id", Delete);
 
 //UPDATE
-router.put("/:id", async (req, res) => {
-  const { id } = req.params;
-  const { name, email, password } = req.body;
-  const UpdateUser = await connectModel.findByIdAndUpdate(id, {
-    name,
-    email,
-    password,
-  });
-  res.status(200).json({ msg: "User Updated", UpdateUser });
-});
+router.put("/:id", Update);
 
 module.exports = { router: router };
